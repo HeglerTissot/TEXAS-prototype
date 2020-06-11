@@ -8,6 +8,8 @@ TX_ATTRIBUTE_TYPE = "type"
 TX_ATTRIBUTE_META = "meta"
 TX_ATTRIBUTE_TEXT = "text"
 TX_ATTRIBUTE_BITS = "bits"
+TX_ATTRIBUTE_ANNS = "anns"
+TX_ANNS_VIEW_TYPE = "type"
 TX_ATTRIBUTE_PARENT = "parent"
 
 #==================================================
@@ -22,6 +24,7 @@ class Texas():
 		self._meta = {}
 		self._text = None
 		self._bits = []
+		self._anns = []
 		self._isListOf = None
 		self._listName = TX_ATTRIBUTE_BITS
 		self._parent = None
@@ -121,6 +124,17 @@ class Texas():
 				return bit
 		return None
 
+	def getAll(self):
+		return self._bits
+
+	def getAnnotationView(self, view_id):
+		for view in self._anns:
+			if view.getID() == view_id and (view.getType() == TX_ANNS_VIEW_TYPE):
+				return view
+		return None
+
+	def getAnns(self):
+
 	def getDICT(self):
 		d = {}
 		d[TX_ATTRIBUTE_TYPE] = self._type
@@ -134,6 +148,10 @@ class Texas():
 			d[self._listName] = []
 			for bit in self._bits:
 				d[self._listName].append(bit.getDICT())
+		if len(self._anns) > 0:
+			d[TX_ATTRIBUTE_ANNS] = []
+			for view in self._anns:
+				d[TX_ATTRIBUTE_ANNS].append(view.getDICT())
 		return d
 
 	def getJSON(self):
@@ -177,17 +195,8 @@ class Corpus(Texas):
 #==================================================
 	def __init__(self):
 		super().__init__("corpus")
-		self.setAsListOf("document","documents")		
+		self.setAsListOf("document","documents")
 		
-	def setDCT(self, dct):
-		self.setMeta("dct",dct)
-
-	def unsetDCT(self):
-		self.unsetMeta("dct")
-
-	def getDCT():
-		return self.getMeta("dct")
-
 #==================================================
 class Document(Texas):
 #==================================================
@@ -201,7 +210,6 @@ class Document(Texas):
 		self.unsetMeta("dct")
 
 	def getDCT():
-		# (ToDo) MISSING: needs to take parent's dct into account
 		return self.getMeta("dct")
 
 #==================================================
@@ -239,6 +247,32 @@ class Answer(Texas):
 #==================================================
 	def __init__(self):
 		super().__init__("answer")
+
+#==================================================
+# Annotation View
+#==================================================
+class View(Texas):
+	def __init__(self,viewName):
+		super().__init__("view")
+		self.setMeta("view_name",viewName)
+class AnnotationView(viewName):
+	def __init__(self):
+		super().__init__(viewName)
+class TokenizerView():
+	def __init__(self):
+		super().__init__("TOKENIZER")
+		self.setAsListOf("token")
+
+#==================================================
+# Annotation Constituents
+#==================================================
+class Token(Texa):
+	def __init__(self,label,start=-1,end=-1,score=-1):
+		super().__init__("token")
+		self.setMeta("label",label)
+		self.setMeta("offset_start",start)
+		self.setMeta("offset_end",end)
+		self.setMeta("score",score)
 
 #==================================================
 class ListOf(Texas):
