@@ -54,14 +54,14 @@ def anns_04():
 	print("#############")
 	print(">> anns_04 <<")
 	print("#############")
-	''' Spacy '''
-	myDoc = tx.Document()
-	myDoc.setText("Barack Hussein Obama II is an American attorney and politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African American president of the United States.")
-	ccgAnns = tx.Spacy.annotate(myDoc)
-	for annView in ccgAnns:
-		myDoc.addAnnotationView(annView)
-	print("-------------")
-	print ( "myDoc = " + myDoc.getJSON().replace("{","{\n") )
+	#''' Spacy '''
+	#myDoc = tx.Document()
+	#myDoc.setText("Barack Hussein Obama II is an American attorney and politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African American president of the United States.")
+	#ccgAnns = tx.Spacy.annotate(myDoc)
+	#for annView in ccgAnns:
+	#	myDoc.addAnnotationView(annView)
+	#print("-------------")
+	#print ( "myDoc = " + myDoc.getJSON().replace("{","{\n") )
 	''' CogComp '''
 	myDoc = tx.Document()
 	myDoc.setText("Barack Hussein Obama II is an American attorney and politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African American president of the United States.")
