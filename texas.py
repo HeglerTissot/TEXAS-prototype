@@ -1,7 +1,8 @@
 #
 # TEXAS :: Text Annotation Schema
-# Author: Hegler Tissot
-# version 2020-06-19
+# Author : Hegler Tissot
+# Version: 0.0.3
+# Date   : 2020-06-19
 #
 
 import sys
